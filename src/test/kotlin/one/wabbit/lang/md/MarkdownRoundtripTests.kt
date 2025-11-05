@@ -10,16 +10,16 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MarkdownRoundtripTests {
-    val string = Gen.listOf(Gen.oneOfGen(Gen.range('a'..'z'), Gen.const(' ')), minSize=1, maxSize=5)
+    val string = Gen.listOf(1..5, Gen.oneOfGen(Gen.range('a'..'z'), Gen.const(' ')))
         .map { it.joinToString("").trim() }.filter { it.isNotEmpty() }
 
     val genMarkdown: Gen<Markdown> = Gen.recursive { gen ->
         Gen.oneOfGen(
             string.map { Markdown.Paragraph(it) },
-            (Gen.range(1..2) zip string zip Gen.listOf(gen, 2))
+            (Gen.range(1..2) zip string zip Gen.listOf(2, gen))
                 .map { t -> Markdown.Section(t.first.first, t.first.second, Markdown.combine(t.second)) },
-            Gen.listOf(gen, 2..3).filter { it.isNotEmpty() }.map { Markdown.combine(it) },
-            Gen.listOf(gen, 1..3).filter { it.isNotEmpty() }.map { Markdown.list(it) }
+            Gen.listOf(2..3, gen).filter { it.isNotEmpty() }.map { Markdown.combine(it) },
+            Gen.listOf(1..3, gen).filter { it.isNotEmpty() }.map { Markdown.list(it) }
         )
     }
 
