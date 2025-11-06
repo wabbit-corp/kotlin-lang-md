@@ -3,12 +3,10 @@ package one.wabbit.lang.md
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
-
 import one.wabbit.parsing.CharInput
 import one.wabbit.parsing.EmptySpan
 
 class MarkdownParserTest {
-
     // A simple helper for test input.
     // In your project, you might have CharInput.withTextOnlySpans(...) or a similar factory.
     private fun charInputOf(text: String): CharInput<EmptySpan> = CharInput.withEmptySpans(text)
@@ -34,12 +32,14 @@ class MarkdownParserTest {
 
     @Test
     fun testHeadingWithParagraph() {
-        val input = charInputOf(
-            """
-            # Title
-            This is a paragraph under Title.
-            """.trimIndent()
-        )
+        val input =
+            charInputOf(
+                """
+                # Title
+                This is a paragraph under Title.
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         assertIs<Markdown.Section>(result)
         assertEquals(1, result.level)
@@ -52,15 +52,17 @@ class MarkdownParserTest {
 
     @Test
     fun testTwoHeadings() {
-        val input = charInputOf(
-            """
-            # Heading One
-            Paragraph under one
+        val input =
+            charInputOf(
+                """
+                # Heading One
+                Paragraph under one
 
-            # Heading Two
-            Another paragraph
-            """.trimIndent()
-        )
+                # Heading Two
+                Another paragraph
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         // We expect a Combine with two sections
         assertIs<Markdown.Combine>(result)
@@ -83,21 +85,23 @@ class MarkdownParserTest {
 
     @Test
     fun testNestedHeadings() {
-        val input = charInputOf(
-            """
-            # Top Section
-            Some text
+        val input =
+            charInputOf(
+                """
+                # Top Section
+                Some text
 
-            ## Sub Section
-            More text
+                ## Sub Section
+                More text
 
-            #### Sub-sub Section
-            Even more text
+                #### Sub-sub Section
+                Even more text
 
-            # Another Top
-            Last text
-            """.trimIndent()
-        )
+                # Another Top
+                Last text
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         /*
          * Expect something like:
@@ -163,13 +167,15 @@ class MarkdownParserTest {
 
     @Test
     fun testSingleList() {
-        val input = charInputOf(
-            """
-            - One
-            - Two
-            - Three
-            """.trimIndent()
-        )
+        val input =
+            charInputOf(
+                """
+                - One
+                - Two
+                - Three
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         /*
          * Expect: List([
@@ -190,13 +196,15 @@ class MarkdownParserTest {
 
     @Test
     fun testMixedBullets() {
-        val input = charInputOf(
-            """
-            * Alpha
-            + Beta
-            - Gamma
-            """.trimIndent()
-        )
+        val input =
+            charInputOf(
+                """
+                * Alpha
+                + Beta
+                - Gamma
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         // Same as a single List with three items.
         assertIs<Markdown.List>(result)
@@ -208,14 +216,16 @@ class MarkdownParserTest {
 
     @Test
     fun testNestedList() {
-        val input = charInputOf(
-            """
-            - Outer
-              + Inner 1
-              + Inner 2
-            - Outer 2
-            """.trimIndent()
-        )
+        val input =
+            charInputOf(
+                """
+                - Outer
+                  + Inner 1
+                  + Inner 2
+                - Outer 2
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         /*
          * Expect:
@@ -253,13 +263,15 @@ class MarkdownParserTest {
 
     @Test
     fun testHeadingThenList() {
-        val input = charInputOf(
-            """
-            # Heading
-            - First
-            - Second
-            """.trimIndent()
-        )
+        val input =
+            charInputOf(
+                """
+                # Heading
+                - First
+                - Second
+                """
+                    .trimIndent()
+            )
         val result = parseMarkdown(input)
         /*
          * Expect:
