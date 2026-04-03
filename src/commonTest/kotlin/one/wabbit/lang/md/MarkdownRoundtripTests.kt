@@ -1,6 +1,6 @@
 package one.wabbit.lang.md
 
-import java.util.SplittableRandom
+import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -34,7 +34,7 @@ class MarkdownRoundtripTests {
     @Ignore
     @Test
     fun testRoundtrip() {
-        val rng = SplittableRandom(2)
+        val rng = Random.Default
         genMarkdown.foreachMin(rng, 100) {
             val markdown = it
             val text = markdown.toText()

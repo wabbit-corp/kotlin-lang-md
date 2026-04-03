@@ -3,6 +3,7 @@ package one.wabbit.lang.md
 import kotlinx.serialization.Serializable
 import one.wabbit.parsing.CharInput
 import one.wabbit.parsing.CharInput.Companion.EOB
+import kotlin.jvm.JvmName
 
 private typealias KList<T> = kotlin.collections.List<T>
 
