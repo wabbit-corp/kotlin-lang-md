@@ -35,11 +35,8 @@ Run the common parser cases on JVM and Node:
 ```sh
 ./gradlew jvmTest jsNodeTest --no-daemon --no-parallel --max-workers=1 \
   -Pkotlin.compiler.execution.strategy=in-process \
-  -Pwabbit.useLocalBuildOverrides=false -Pwabbit.useMavenLocalArtifacts=true
+  -Pwabbit.useLocalBuildOverrides=false
 ```
 
 The existing ignored generative DSL round-trip test remains JVM-only because its generator has
-no JS variant. The executable document/malformed-input tests run on both platforms. The new
-browser artifacts are currently development-local; publishing requires a new character-input
-release with JS metadata and publication of this Markdown module. Do not treat a local Maven
-installation as proof that normal Maven Central consumers can resolve the new targets.
+no JS variant. The executable document/malformed-input tests run on both platforms.
